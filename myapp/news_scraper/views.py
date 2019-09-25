@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from .models import Article
 
 def index(request):
@@ -10,7 +10,8 @@ def index(request):
     return render(request, 'news_scraper/index.html', context)
 
 def detail(request, article_id):
-    return HttpResponse("You're looking at article %s." % article_id)
+    article = get_object_or_404(Article, pk=article_id)
+    return render(request, 'news_scraper/detail.html', {'article' : article})
 
 def keywords(request, article_id):
     response = "You're looking at the keywords of article %s."
